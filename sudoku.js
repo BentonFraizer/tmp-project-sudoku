@@ -11,7 +11,11 @@ function solve(boardString) {
  * Возвращает булевое значение — решено это игровое поле или нет.
  */
 function isSolved(board) {
+  // Проверка на то, что сумма чисел в каждой строке равна 45
+  const rowSums = board.map((row) => row.reduce((acc, cur) => acc + cur, 0));
+  const checkSumInRows = rowSums.every((num) => num === 45);
 
+  return checkSumInRows;
 }
 
 /**
