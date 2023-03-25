@@ -29,7 +29,47 @@ function isSolved(board) {
   const columnSums = board.map((row) => row.reduce((acc, cur) => acc + cur, 0));
   const checkSumInColumns = columnSums.every((num) => num === 45);
 
-  return (checkSumInRows && checkSumInColumns);
+  // Преобразование исходного массива в массив котором в каждом элементе находятся
+  // цифры из каждого квадрата размером 3х3
+  const numbersFromLittleSquares = [];
+  let middleArr = [];
+  let rowIndex = 3;
+  let columnIndex = 3;
+  let perThreeColumns = 0;
+  for (let i = 0; i < rowIndex; i += 1) {
+    for (let j = perThreeColumns; j < columnIndex; j += 1) {
+      middleArr.push(board[i][j]);
+    }
+
+    if (i === 2 || i === 5) {
+      rowIndex += 3;
+    }
+
+    if (middleArr.length === 9) {
+      numbersFromLittleSquares.push(middleArr);
+      middleArr = [];
+      if (numbersFromLittleSquares.length === 3 || numbersFromLittleSquares.length === 6) {
+        perThreeColumns += 3;
+        columnIndex += 3;
+      }
+    }
+
+    if (i === 8) {
+      i = -1;
+      rowIndex = 3;
+    }
+
+    if (numbersFromLittleSquares.length === 9) {
+      break;
+    }
+  }
+
+  // Проверка на то, что в сумма чисел в каждом секторе 3х3 равна 45
+  const littleSquaresSums = board.map((row) => row.reduce((acc, cur) => acc + cur, 0));
+  const checkSumInLittleSquares = littleSquaresSums.every((num) => num === 45);
+
+  // Если одна из проверок не пройдена, вернётся false
+  return (checkSumInRows && checkSumInColumns && checkSumInLittleSquares);
 }
 
 /**
