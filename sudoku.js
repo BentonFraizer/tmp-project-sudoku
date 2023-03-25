@@ -15,7 +15,21 @@ function isSolved(board) {
   const rowSums = board.map((row) => row.reduce((acc, cur) => acc + cur, 0));
   const checkSumInRows = rowSums.every((num) => num === 45);
 
-  return checkSumInRows;
+  // Транспонирование матрицы
+  const transposedBoard = [];
+  for (let i = 0; i < board[0].length; i += 1) {
+    const transposedLine = [];
+    board.forEach((piece) => {
+      transposedLine.push(piece[i]);
+    });
+    transposedBoard.push(transposedLine);
+  }
+
+  // Проверка на то, что в сумма чисел в каждой транспонированной строке равна 45
+  const columnSums = board.map((row) => row.reduce((acc, cur) => acc + cur, 0));
+  const checkSumInColumns = columnSums.every((num) => num === 45);
+
+  return (checkSumInRows && checkSumInColumns);
 }
 
 /**
