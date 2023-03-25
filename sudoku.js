@@ -3,8 +3,18 @@
  * Возвращает игровое поле после попытки его решить.
  * Договорись со своей командой, в каком формате возвращать этот результат.
  */
-function solve(boardString) {
+function solve(boardString) { 
+  
 }
+
+// получаем массив недостающих цифр 
+function searchInString(arr){
+  const arr1=[];
+  const mas = [1,2,3,4,5,6,7,8,9];
+  for (let i = 0; i<mas.length; i++){
+         if (!arr.includes(mas[i])) {
+          arr1.push(mas[i])}
+  }return arr1 }
 
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
