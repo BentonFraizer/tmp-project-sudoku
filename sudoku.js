@@ -1,14 +1,14 @@
 const boardString = [
   ['1', '-', '5', '8', '-', '2', '-', '-', '-'],
-  ['-', '9', '-','-', '7', '6', '4', '-', '5' ],
+  ['-', '9', '-', '-', '7', '6', '4', '-', '5'],
   ['2', '-', '-', '4', '-', '-', '8', '1', '9'],
   ['-', '1', '9', '-', '-', '7', '3', '-', '6'],
   ['7', '6', '2', '-', '8', '3', '-', '9', '-'],
   ['-', '-', '-', '-', '6', '1', '-', '5', '-'],
   ['-', '-', '7', '6', '-', '-', '-', '3', '-'],
   ['4', '3', '-', '-', '2', '-', '5', '-', '1'],
-  ['6', '-', '-', '3', '-', '8', '9', '-', '-']
-]
+  ['6', '-', '-', '3', '-', '8', '9', '-', '-'],
+];
 /**
  * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
  * Возвращает игровое поле после попытки его решить.
@@ -18,38 +18,38 @@ function solve(boardString) {
 
 }
 // Получение массива недостающих чисел в строке по индексу
-function getMissingValuesInRow (arr,index){
-  const res =(arr[index].filter((elem)=> Number(elem)));
+function getMissingValuesInRow(arr, index) {
+  const res = (arr[index].filter((elem) => Number(elem)));
   let existingNumbers = [];
-  for(let i=0; i<res.length;i++){
-    existingNumbers = res.map((el)=> +el) 
+  for (let i = 0; i < res.length; i += 1) {
+    existingNumbers = res.map((el) => +el);
   }
-  let missingNumber =[];
-  const mas = [1,2,3,4,5,6,7,8,9];
-  for (let i = 0; i<mas.length; i++){
+  const missingNumber = [];
+  const mas = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  for (let i = 0; i < mas.length; i += 1) {
     if (!existingNumbers.includes(mas[i])) {
       missingNumber.push(mas[i]);
     }
   }
-  return missingNumber
+  return missingNumber;
 }
 
 // Получение массива недостающих чисел в столбце по индексу
-function getMissingValuesInCollumn(arr, index){
-  let res=[];
-  let arr1 = [];
-  const mas = [1,2,3,4,5,6,7,8,9];
-  for(let i=0; i<arr.length;i++){
-    if (!Number.isNaN(arr[i][index])){
-      res.push(Number(arr[i][index]))
+function getMissingValuesInCollumn(arr, index) {
+  const res = [];
+  const arr1 = [];
+  const mas = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  for (let i = 0; i < arr.length; i += 1) {
+    if (!Number.isNaN(arr[i][index])) {
+      res.push(Number(arr[i][index]));
     }
   }
-  for (let i = 0; i<mas.length; i++){
+  for (let i = 0; i < mas.length; i += 1) {
     if (!res.includes(mas[i])) {
-      arr1.push(mas[i])
+      arr1.push(mas[i]);
     }
   }
-  return arr1
+  return arr1;
 }
 
 /**
@@ -123,9 +123,21 @@ function isSolved(board) {
  * Возвращает строку с игровым полем для последующего вывода в консоль.
  * Подумай, как симпатичнее сформировать эту строку.
  */
-// function prettyBoard(board) {
+function prettyBoard(board) {
+  const arr = [['-----------------']];
+  for (let i = 0; i < board.length; i += 1) {
+    arr.push(board[i].join('|').split(','));
+    arr.push(['-----------------']);
+  }
+  const newArr = [];
+  for (let j = 0; j < arr.length; j += 1) {
+    newArr.push(arr[j].join(''));
+  }
+  const resultString = newArr.join('\n');
 
-// }
+  return resultString;
+}
+console.log(prettyBoard(boardString));
 // function searchInSquare (arr,i,j){
 //   let res=[];
 //   let arr1 = [];
@@ -135,7 +147,7 @@ function isSolved(board) {
 //   }
 //   if ((i==0||i==1||i==2)&&(j==0||j==1||j==2)){
 //       return massiv;
-  
+
 //   }
 // return arr1}
 

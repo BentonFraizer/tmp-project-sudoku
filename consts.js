@@ -141,4 +141,19 @@ const getPrettyNumber = (number) => {
   }
 };
 
-module.exports = getPrettyNumber;
+function makeArrayFromString(string, startIndex) {
+  const puzzleArr = string.split('');
+
+  const array = [];
+  const y = ((startIndex - 1) * 81);
+  for (let i = y; i < puzzleArr.length; i += 1) {
+    array.push(puzzleArr.splice(y, 9));
+    if (array.length === 9) { break; }
+  }
+  return array;
+}
+
+module.exports = {
+  getPrettyNumber,
+  makeArrayFromString,
+};
