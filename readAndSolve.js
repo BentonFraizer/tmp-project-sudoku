@@ -1,8 +1,7 @@
 // Подключить функции из файла sudoku.js.
 const sudoku = require('./sudoku');
 const {EOL} = require ('os');
-const getPrettyNumber = require('./consts');
-
+const { getPrettyNumber, makeArrayFromString } = require('./consts');
 
 function readAndSolve(error, fileData) {
   // Если чтение файла не удалось, выбросить ошибку с описанием проблемы и
@@ -35,7 +34,7 @@ function readAndSolve(error, fileData) {
                                                       |___/ |___/            |___/ 
 `);
   console.log(`${getPrettyNumber(puzzleNumber)}`);
-  console.log(puzzle, EOL);
+  console.log(makeArrayFromString(puzzle), EOL);
 
   // Использовать функцию solve из файла sudoku.js для решения судоку.
   const solvedPuzzle = sudoku.solve(puzzle);
