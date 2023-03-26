@@ -1,38 +1,38 @@
 const { getValuesInSquare, getCorrectValues } = require('./consts.js');
 
 // Получение массива недостающих чисел в строке по индексу
-function getMissingValuesInRow (arr,index){
-  const res =(arr[index].filter((elem)=> Number(elem)));
+function getMissingValuesInRow(arr, index) {
+  const res = (arr[index].filter((elem) => Number(elem)));
   let existingNumbers = [];
-  for(let i=0; i<res.length;i++){
-    existingNumbers = res.map((el)=> +el) 
+  for (let i = 0; i < res.length; i += 1) {
+    existingNumbers = res.map((el) => +el);
   }
-  let missingNumber =[];
-  const mas = [1,2,3,4,5,6,7,8,9];
-  for (let i = 0; i<mas.length; i++){
+  const missingNumber = [];
+  const mas = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  for (let i = 0; i < mas.length; i += 1) {
     if (!existingNumbers.includes(mas[i])) {
       missingNumber.push(mas[i]);
     }
   }
-  return missingNumber
+  return missingNumber;
 }
 
 // Получение массива недостающих чисел в столбце по индексу
-function getMissingValuesInCollumn(arr, index){
-  let res=[];
-  let arr1 = [];
-  const mas = [1,2,3,4,5,6,7,8,9];
-  for(let i=0; i<arr.length;i++){
-    if (!Number.isNaN(arr[i][index])){
-      res.push(Number(arr[i][index]))
+function getMissingValuesInCollumn(arr, index) {
+  const res = [];
+  const arr1 = [];
+  const mas = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  for (let i = 0; i < arr.length; i += 1) {
+    if (!Number.isNaN(arr[i][index])) {
+      res.push(Number(arr[i][index]));
     }
   }
-  for (let i = 0; i<mas.length; i++){
+  for (let i = 0; i < mas.length; i += 1) {
     if (!res.includes(mas[i])) {
-      arr1.push(mas[i])
+      arr1.push(mas[i]);
     }
   }
-  return arr1
+  return arr1;
 }
 
 //получение массива недостающих чисел в квадрате по индексу
@@ -57,25 +57,24 @@ function getMissingValuesInSquare(arr,row,col){
  * Возвращает игровое поле после попытки его решить.
  * Договорись со своей командой, в каком формате возвращать этот результат.
  */
-function solve(arr) {
+function solve(boardString) {
   const solvedSudoku = [];
-  for(let i=0; i < arr.length; i+=1){
+  for(let i=0; i < boardString.length; i+=1){
     
-    for (let j=0; j < arr[i]; j+=1){
-      if (arr[i][j]==='-'){
-        let missingValuesInRow = getMissingValuesInRow(arr,i);
-        let missingValuesInCollumn = getMissingValuesInCollumn(arr, j);
-        let missingValuesInSquare = getMissingValuesInSquare(arr, i, j);
+    for (let j=0; j < boardString[i]; j+=1){
+      if (boardString[i][j]==='-'){
+        let missingValuesInRow = getMissingValuesInRow(boardString,i);
+        let missingValuesInCollumn = getMissingValuesInCollumn(boardString, j);
+        let missingValuesInSquare = getMissingValuesInSquare(boardString, i, j);
         let correctValues = getCorrectValues(missingValuesInRow, missingValuesInCollumn, missingValuesInSquare);
         solvedSudoku = correctValues[0]
       } else { 
-        solvedSudoku.push(arr[i][j])
+        solvedSudoku.push(boardString[i][j])
       }
     } 
   }
   return solvedSudoku;
 }
-
 
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
@@ -149,7 +148,19 @@ function isSolved(board) {
  * Подумай, как симпатичнее сформировать эту строку.
  */
 function prettyBoard(board) {
-
+  const arr = [['-----------------']];
+  for (let i = 0; i < board.length; i += 1) {
+    arr.push(board[i].join('|').split(','));
+    arr.push(['-----------------']);
+  }
+  
+  const newArr = [];
+  for (let j = 0; j < arr.length; j += 1) {
+    newArr.push(arr[j].join(''));
+  }
+  
+  const resultString = newArr.join('\n');
+  return resultString;
 }
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
