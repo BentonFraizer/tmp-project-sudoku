@@ -1,7 +1,7 @@
 // Подключить функции из файла sudoku.js.
-const sudoku = require('./sudoku');
-const {EOL} = require ('os');
-const { getPrettyNumber, makeArrayFromString } = require('./consts');
+const sudoku = require("./sudoku");
+const { EOL } = require("os");
+const { getPrettyNumber, makeArrayFromString } = require("./consts");
 
 function readAndSolve(error, fileData) {
   // Если чтение файла не удалось, выбросить ошибку с описанием проблемы и
@@ -11,9 +11,7 @@ function readAndSolve(error, fileData) {
   }
 
   // Разбить содержимое файла построчно и отфильтровать все пустые строки.
-  const puzzles = fileData
-    .split(EOL)
-    .filter((line) => line !== '');
+  const puzzles = fileData.split(EOL).filter((line) => line !== "");
 
   // Получить номер судоку из process.argv, либо взять 1-й судоку по умолчанию.
   let puzzleNumber = Number(process.argv[2]) || 1;
@@ -34,10 +32,10 @@ function readAndSolve(error, fileData) {
                                                       |___/ |___/            |___/ 
 `);
   console.log(`${getPrettyNumber(puzzleNumber)}`);
-  console.log(makeArrayFromString(puzzle), EOL);
+  console.log(sudoku.prettyBoard(makeArrayFromString(puzzle)), EOL);
 
   // Использовать функцию solve из файла sudoku.js для решения судоку.
-  const solvedPuzzle = sudoku.solve(puzzle);
+  const solvedPuzzle = sudoku.solve(makeArrayFromString(puzzle));
 
   // Использовать функцию isSolved из файла sudoku.js для проверки решения судоку.
   if (!sudoku.isSolved(solvedPuzzle)) {
@@ -49,7 +47,7 @@ function readAndSolve(error, fileData) {
     |_| |_|\\___|    \\___|_|  |_|\\___/|_|  \\___/|___\\__ _|   |  __/ \\___|_____|_____|___\\__ _||_| |_ __/     \\___|\\__  |\\__  |\\___/|_|\\_\\__   |
                                                             |_|                                                  |___/ |___/            |___/  
     `);
-
+    console.log(sudoku.prettyBoard(solvedPuzzle), EOL);
     return; // Если судоку не решён, завершить работу этой функции.
   }
 
