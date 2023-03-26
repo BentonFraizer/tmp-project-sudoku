@@ -1,22 +1,5 @@
-const boardString = [
-  ['1', '-', '5', '8', '-', '2', '-', '-', '-'],
-  ['-', '9', '-', '-', '7', '6', '4', '-', '5'],
-  ['2', '-', '-', '4', '-', '-', '8', '1', '9'],
-  ['-', '1', '9', '-', '-', '7', '3', '-', '6'],
-  ['7', '6', '2', '-', '8', '3', '-', '9', '-'],
-  ['-', '-', '-', '-', '6', '1', '-', '5', '-'],
-  ['-', '-', '7', '6', '-', '-', '-', '3', '-'],
-  ['4', '3', '-', '-', '2', '-', '5', '-', '1'],
-  ['6', '-', '-', '3', '-', '8', '9', '-', '-'],
-];
-/**
- * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
- * Возвращает игровое поле после попытки его решить.
- * Договорись со своей командой, в каком формате возвращать этот результат.
- */
-function solve(boardString) {
+const { getValuesInSquare, getCorrectValues } = require('./consts.js');
 
-}
 // Получение массива недостающих чисел в строке по индексу
 function getMissingValuesInRow(arr, index) {
   const res = (arr[index].filter((elem) => Number(elem)));
@@ -50,6 +33,47 @@ function getMissingValuesInCollumn(arr, index) {
     }
   }
   return arr1;
+}
+
+//получение массива недостающих чисел в квадрате по индексу
+function getMissingValuesInSquare(arr,row,col){
+  let numbersInSquare =getValuesInSquare(arr,row,col);
+  let existingNumbers = [];
+  for(let i=0; i<numbersInSquare.length;i++){
+    existingNumbers = numbersInSquare.map((el)=> +el) 
+  }
+  let missingNumber =[];
+  const mas = [1,2,3,4,5,6,7,8,9];
+  for (let i = 0; i<mas.length; i++){
+    if (!existingNumbers.includes(mas[i])) {
+      missingNumber.push(mas[i]);
+    }
+  }
+  return missingNumber
+};
+
+/**
+ * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
+ * Возвращает игровое поле после попытки его решить.
+ * Договорись со своей командой, в каком формате возвращать этот результат.
+ */
+function solve(boardString) {
+  const solvedSudoku = [];
+  for(let i=0; i < boardString.length; i+=1){
+    
+    for (let j=0; j < boardString[i]; j+=1){
+      if (boardString[i][j]==='-'){
+        let missingValuesInRow = getMissingValuesInRow(boardString,i);
+        let missingValuesInCollumn = getMissingValuesInCollumn(boardString, j);
+        let missingValuesInSquare = getMissingValuesInSquare(boardString, i, j);
+        let correctValues = getCorrectValues(missingValuesInRow, missingValuesInCollumn, missingValuesInSquare);
+        solvedSudoku = correctValues[0]
+      } else { 
+        solvedSudoku.push(boardString[i][j])
+      }
+    } 
+  }
+  return solvedSudoku;
 }
 
 /**
@@ -129,31 +153,19 @@ function prettyBoard(board) {
     arr.push(board[i].join('|').split(','));
     arr.push(['-----------------']);
   }
+  
   const newArr = [];
   for (let j = 0; j < arr.length; j += 1) {
     newArr.push(arr[j].join(''));
   }
+  
   const resultString = newArr.join('\n');
-
   return resultString;
 }
-console.log(prettyBoard(boardString));
-// function searchInSquare (arr,i,j){
-//   let res=[];
-//   let arr1 = [];
-//   if ((i==0||i==1||i==2)&&(j==0||j==1||j==2)){
-//     const res = res.push(arr[0][0]....arr[2][2])
-//     return massiv;
-//   }
-//   if ((i==0||i==1||i==2)&&(j==0||j==1||j==2)){
-//       return massiv;
-
-//   }
-// return arr1}
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
-// module.exports = {
-//   solve,
-//   isSolved,
-//   prettyBoard,
-// };
+module.exports = {
+  solve,
+  isSolved,
+  prettyBoard,
+};
