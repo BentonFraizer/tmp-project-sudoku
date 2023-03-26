@@ -17,30 +17,40 @@ const boardString = [
 function solve(boardString) {
 
 }
-//    формирование строки РАБОТАЕТ!!!!!!!!!!!!!!!
-function createString (arr){
-  let res=[];
-  for(let i=0; i<arr.length;i++){
-   res.push(arr[i].filter((elem)=> Number(elem)));
-  } 
-  for(let j=0; j<res.length;j++){
-    res[j]=res[j].map((el)=> +el) 
+// Получение массива недостающих чисел в строке по индексу
+function getMissingValuesInRow (arr,index){
+  const res =(arr[index].filter((elem)=> Number(elem)));
+  let existingNumbers = [];
+  for(let i=0; i<res.length;i++){
+    existingNumbers = res.map((el)=> +el) 
   }
-  return res
+  let missingNumber =[];
+  const mas = [1,2,3,4,5,6,7,8,9];
+  for (let i = 0; i<mas.length; i++){
+    if (!existingNumbers.includes(mas[i])) {
+      missingNumber.push(mas[i]);
+    }
+  }
+  return missingNumber
 }
-// /получаем массив недостающих цифр  в столбце индекса [index]
-function searchInCollumn(arr, index){
+
+// Получение массива недостающих чисел в столбце по индексу
+function getMissingValuesInCollumn(arr, index){
   let res=[];
   let arr1 = [];
   const mas = [1,2,3,4,5,6,7,8,9];
   for(let i=0; i<arr.length;i++){
-    if (!isNaN(arr[i][index]))
-  res.push(Number(arr[i][index]))
+    if (!Number.isNaN(arr[i][index])){
+      res.push(Number(arr[i][index]))
+    }
   }
   for (let i = 0; i<mas.length; i++){
-         if (!res.includes(mas[i])) {
-          arr1.push(mas[i])}
-}return arr1}
+    if (!res.includes(mas[i])) {
+      arr1.push(mas[i])
+    }
+  }
+  return arr1
+}
 
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
@@ -55,13 +65,25 @@ function isSolved(board) {
  * Возвращает строку с игровым полем для последующего вывода в консоль.
  * Подумай, как симпатичнее сформировать эту строку.
  */
-function prettyBoard(board) {
+// function prettyBoard(board) {
 
-}
+// }
+// function searchInSquare (arr,i,j){
+//   let res=[];
+//   let arr1 = [];
+//   if ((i==0||i==1||i==2)&&(j==0||j==1||j==2)){
+//     const res = res.push(arr[0][0]....arr[2][2])
+//     return massiv;
+//   }
+//   if ((i==0||i==1||i==2)&&(j==0||j==1||j==2)){
+//       return massiv;
+  
+//   }
+// return arr1}
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
-module.exports = {
-  solve,
-  isSolved,
-  prettyBoard,
-};
+// module.exports = {
+//   solve,
+//   isSolved,
+//   prettyBoard,
+// };
