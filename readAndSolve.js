@@ -1,7 +1,7 @@
 // Подключить функции из файла sudoku.js.
-const sudoku = require("./sudoku");
-const { EOL } = require("os");
-const { getPrettyNumber, makeArrayFromString } = require("./consts");
+const sudoku = require('./sudoku');
+const { EOL } = require('os');
+const { getPrettyNumber, makeArrayFromString } = require('./consts');
 
 function readAndSolve(error, fileData) {
   // Если чтение файла не удалось, выбросить ошибку с описанием проблемы и
@@ -11,7 +11,7 @@ function readAndSolve(error, fileData) {
   }
 
   // Разбить содержимое файла построчно и отфильтровать все пустые строки.
-  const puzzles = fileData.split(EOL).filter((line) => line !== "");
+  const puzzles = fileData.split(EOL).filter((line) => line !== '');
 
   // Получить номер судоку из process.argv, либо взять 1-й судоку по умолчанию.
   let puzzleNumber = Number(process.argv[2]) || 1;

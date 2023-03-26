@@ -1,4 +1,6 @@
-const { getValuesInSquare, getCorrectValues } = require("./consts.js");
+/* eslint-disable no-self-assign */
+/* eslint-disable no-param-reassign */
+const { getValuesInSquare, getCorrectValues } = require('./consts');
 
 // Получение массива недостающих чисел в строке по индексу
 function getMissingValuesInRow(arr, index) {
@@ -35,16 +37,16 @@ function getMissingValuesInCollumn(arr, index) {
   return arr1;
 }
 
-//получение массива недостающих чисел в квадрате по индексу
+// получение массива недостающих чисел в квадрате по индексу
 function getMissingValuesInSquare(arr, row, col) {
-  let numbersInSquare = getValuesInSquare(arr, row, col);
+  const numbersInSquare = getValuesInSquare(arr, row, col);
   let existingNumbers = [];
-  for (let i = 0; i < numbersInSquare.length; i++) {
+  for (let i = 0; i < numbersInSquare.length; i += 1) {
     existingNumbers = numbersInSquare.map((el) => +el);
   }
-  let missingNumber = [];
+  const missingNumber = [];
   const mas = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  for (let i = 0; i < mas.length; i++) {
+  for (let i = 0; i < mas.length; i += 1) {
     if (!existingNumbers.includes(mas[i])) {
       missingNumber.push(mas[i]);
     }
@@ -58,23 +60,23 @@ function getMissingValuesInSquare(arr, row, col) {
  * Договорись со своей командой, в каком формате возвращать этот результат.
  */
 function solve(boardString) {
-  let solvedSudoku = boardString;
+  const solvedSudoku = boardString;
   for (let i = 0; i < boardString.length; i += 1) {
     let midleArray = [];
     for (let j = 0; j < boardString[i].length; j += 1) {
-      if (boardString[i][j] === "-") {
-        let missingValuesInRow = getMissingValuesInRow(boardString, i);
-        let missingValuesInCollumn = getMissingValuesInCollumn(boardString, j);
-        let missingValuesInSquare = getMissingValuesInSquare(boardString, i, j);
-        let correctValues = getCorrectValues(
+      if (boardString[i][j] === '-') {
+        const missingValuesInRow = getMissingValuesInRow(boardString, i);
+        const missingValuesInCollumn = getMissingValuesInCollumn(boardString, j);
+        const missingValuesInSquare = getMissingValuesInSquare(boardString, i, j);
+        const correctValues = getCorrectValues(
           missingValuesInRow,
           missingValuesInCollumn,
-          missingValuesInSquare
+          missingValuesInSquare,
         );
-        // midleArray.push(String(correctValues[Math.floor(Math.random() * correctValues.length)]));
-        // boardString[i][j] = String(correctValues[Math.floor(Math.random() * correctValues.length)]);
+// midleArray.push(String(correctValues[Math.floor(Math.random() * correctValues.length)]));
+// boardString[i][j] = String(correctValues[Math.floor(Math.random() * correctValues.length)]);
         if (correctValues.length === 0) {
-          boardString[i][j] = "0";
+          boardString[i][j] = '0';
         } else {
           boardString[i][j] = String(correctValues[0]);
         }
@@ -97,9 +99,7 @@ function solve(boardString) {
 function isSolved(board) {
   const boardFromNumbers = board.map((row) => row.map((item) => +item));
   // Проверка на то, что сумма чисел в каждой строке равна 45
-  const rowSums = boardFromNumbers.map((row) =>
-    row.reduce((acc, cur) => acc + cur, 0)
-  );
+  const rowSums = boardFromNumbers.map((row) => row.reduce((acc, cur) => acc + cur, 0));
   const checkSumInRows = rowSums.every((num) => num === 45);
 
   // Транспонирование матрицы
@@ -113,9 +113,7 @@ function isSolved(board) {
   }
 
   // Проверка на то, что в сумма чисел в каждой транспонированной строке равна 45
-  const columnSums = boardFromNumbers.map((row) =>
-    row.reduce((acc, cur) => acc + cur, 0)
-  );
+  const columnSums = boardFromNumbers.map((row) => row.reduce((acc, cur) => acc + cur, 0));
   const checkSumInColumns = columnSums.every((num) => num === 45);
 
   // Преобразование исходного массива в массив котором в каждом элементе находятся
@@ -137,10 +135,7 @@ function isSolved(board) {
     if (middleArr.length === 9) {
       numbersFromLittleSquares.push(middleArr);
       middleArr = [];
-      if (
-        numbersFromLittleSquares.length === 3 ||
-        numbersFromLittleSquares.length === 6
-      ) {
+      if (numbersFromLittleSquares.length === 3 || numbersFromLittleSquares.length === 6) {
         perThreeColumns += 3;
         columnIndex += 3;
       }
@@ -172,18 +167,18 @@ function isSolved(board) {
  * Подумай, как симпатичнее сформировать эту строку.
  */
 function prettyBoard(board) {
-  const arr = [["-----------------"]];
+  const arr = [['-----------------']];
   for (let i = 0; i < board.length; i += 1) {
-    arr.push(board[i].join("|").split(","));
-    arr.push(["-----------------"]);
+    arr.push(board[i].join('|').split(','));
+    arr.push(['-----------------']);
   }
 
   const newArr = [];
   for (let j = 0; j < arr.length; j += 1) {
-    newArr.push(arr[j].join(""));
+    newArr.push(arr[j].join(''));
   }
 
-  const resultString = newArr.join("\n");
+  const resultString = newArr.join('\n');
   return resultString;
 }
 
